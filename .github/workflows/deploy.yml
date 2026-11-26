@@ -1,0 +1,29 @@
+# main 브랜치에 push 하면 노트북(공개 서버)의 htdocs 를 자동으로 최신 코드로 바꿉니다.
+#   1) GitHub 서버를 Tailscale 에 잠깐 참여시켜 노트북(100.x.x.x)에 닿게 하고
+#   2) SSH 로 노트북에 접속해서 deploy.bat 을 실행합니다.
+# 필요한 GitHub Secrets: TS_AUTHKEY, SSH_KEY, SERVER_HOST
+name: 서버 자동 배포
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:          # Actions 화면에서 직접 실행 버튼
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tailscale 연결
+        uses: tailscale/github-action@v3
+        with:
+          authkey: ${{ secrets.TS_AUTHKEY }}
+
+      - name: SSH 로 접속해서 배포
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=30 team@"$HOST" "C:\xampp\htdocs\music-dashboard\deploy.bat"

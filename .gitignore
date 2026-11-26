@@ -1,0 +1,14 @@
+# 비밀값이 들어 있는 설정 파일 (서버에만 둠)
+config.php
+spotify_config.php
+
+# 이 노트북에서만 쓰는 파일·폴더
+_backup/
+tools/
+Claude outputs/
+_tunnel.log
+_diag.txt
+_import.php
+서버열기.bat
+.vscode/
+deploy.log

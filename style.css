@@ -1,0 +1,238 @@
+/* 음악 추천 대시보드 공통 디자인. 강조는 배경색으로, 순위가 높을수록 진한 보라. */
+:root {
+  --bg: #f6f5fb; --panel: #ffffff; --fg: #1d1a2b; --muted: #6a6680; --line: #dcd8ec;
+  --accent: #4a3a9c; --rank1: #b6a9ee; --rank2: #d5cdf6; --rank3: #ebe7fb; --sum: #dcebfb; --bad: #b3261e;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 20px 16px 40px; background: var(--bg); color: var(--fg);
+       font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; font-size: 15px; line-height: 1.55; }
+.app { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3, p { margin: 0; }
+.muted { color: var(--muted); } .small { font-size: 13px; }
+
+.btn { display: inline-block; border: 1.5px solid var(--fg); background: var(--panel); color: var(--fg); border-radius: 6px;
+       padding: 7px 14px; font: inherit; font-weight: 600; text-decoration: none; text-align: center; cursor: pointer; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.danger { background: var(--panel); border-color: var(--bad); color: var(--bad); }
+.btn.danger:hover { background: var(--bad); color: #fff; }
+.reset-box { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.reset-box .sec-title { margin-bottom: 4px; }
+.topbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border-bottom: 1.5px solid var(--line); padding-bottom: 14px; }
+.topbar .who { font-size: 19px; font-weight: 700; margin-right: auto; }
+.brand { font-weight: 700; }
+.panel { background: var(--panel); border: 1.5px solid var(--line); border-radius: 8px; padding: 16px; }
+.sec-title { font-size: 17px; margin-bottom: 10px; }
+
+/* 메인 */
+.hero { text-align: center; padding: 60px 0; display: flex; flex-direction: column; gap: 14px; }
+.hero h1 { font-size: 34px; }
+
+/* 로그인 */
+.auth { max-width: 360px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; }
+.field input, .field select { font: inherit; padding: 9px 10px; border: 1.5px solid var(--line); border-radius: 6px; }
+.err { color: var(--bad); font-size: 13px; min-height: 1.4em; }
+.row { display: flex; gap: 10px; } .row > * { flex: 1; }
+
+/* 요약 */
+.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.sum-card { background: var(--sum); border-radius: 8px; padding: 14px 16px; }
+.sum-card .lab { font-size: 13px; color: var(--muted); }
+.sum-card .val { font-size: 30px; font-weight: 700; line-height: 1.2; }
+.sum-card .val small { font-size: 14px; font-weight: 400; color: var(--muted); }
+
+/* 추천 플레이리스트 */
+.pl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;
+           align-items: start; }   /* 카드마다 자기 내용만큼만 길어지게 (한 카드 목록을 열어도 옆 카드는 그대로) */
+/* 플레이리스트 [전체 재생] 버튼 */
+.playall { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px;
+           background: var(--accent); color: #fff; border-radius: 8px; padding: 10px 12px;
+           font-weight: 700; font-size: 14px; text-decoration: none; }
+.playall:hover { filter: brightness(1.12); }
+.playall .n { font-weight: 400; opacity: .85; font-size: 12.5px; }
+.playall.off { background: var(--panel); color: var(--muted); border: 1.5px dashed var(--line); cursor: default; filter: none; }
+.pl .sub { font-size: 11.5px; color: var(--muted); text-align: center; }
+.pl { border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 6px; border: 1.5px solid transparent; }
+.pl.r1 { background: var(--rank1); border-color: var(--fg); } .pl.r2 { background: var(--rank2); } .pl.r3 { background: var(--rank3); }
+.badge { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 700; }
+.pl .name { font-weight: 700; font-size: 16px; } .pl .cnt { font-size: 13px; color: var(--muted); }
+.tag { align-self: flex-start; font-size: 12px; border: 1px solid var(--accent); color: var(--accent); background: #fff; border-radius: 4px; padding: 1px 7px; }
+
+/* 추천 곡 */
+.mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
+.mini { background: var(--panel); border: 1.5px solid var(--line); border-radius: 8px; padding: 12px; display: flex; gap: 10px; align-items: center; margin: 0; }
+.mini.first { background: var(--rank3); border-color: var(--fg); grid-column: 1 / -1; }
+.mini .meta { flex: 1; min-width: 0; } .mini .t { font-weight: 700; } .why { color: var(--accent); }
+.play { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--accent); color: #fff; cursor: pointer; }
+
+/* 차트 */
+.charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.chart-title { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.chart-box { position: relative; height: 200px; }
+
+.empty { border: 2px dashed var(--line); border-radius: 8px; padding: 24px; text-align: center; display: flex; flex-direction: column; gap: 8px; }
+
+/* ===== 추가: 메인 소개 그림, 공유 팝업, 공유 화면 ===== */
+.hero { align-items: center; padding: 36px 0 8px; }
+.wave { display: flex; gap: 5px; align-items: flex-end; height: 64px; }
+.wave i { width: 9px; border-radius: 3px; background: var(--rank1); }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; text-align: left; width: 100%; margin-top: 10px; }
+.steps .panel b { display: block; margin-bottom: 2px; }
+
+.cover { flex: none; width: 42px; height: 42px; border-radius: 6px; background: var(--rank2); color: var(--accent); display: grid; place-items: center; font-size: 20px; }
+.flash { background: var(--sum); border-radius: 6px; padding: 8px 12px; }
+[hidden] { display: none !important; }
+
+.scrim { position: fixed; inset: 0; background: rgba(20, 16, 40, .55); display: grid; place-items: center; padding: 16px; overflow: auto; z-index: 20; }
+.modal { width: min(380px, 100%); display: flex; flex-direction: column; gap: 12px; }
+.pamphlet { background: var(--panel); border: 2px solid var(--fg); border-radius: 8px; overflow: hidden; }
+.pamphlet header { background: var(--rank1); padding: 14px 40px 12px 16px; text-align: center; position: relative; }
+.pamphlet header h3 { font-size: 18px; } .pamphlet header p { font-size: 12px; }
+.close { position: absolute; right: 8px; top: 8px; border: 0; background: transparent; font-size: 22px; line-height: 1; width: 32px; height: 32px; cursor: pointer; }
+.pamphlet .in { padding: 16px 20px 14px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.avatar { border-radius: 50%; background: var(--rank2); display: grid; place-items: center; font-weight: 700; color: var(--accent); flex: none; }
+.avatar.xl { width: 96px; height: 96px; font-size: 38px; } .avatar.md { width: 56px; height: 56px; font-size: 22px; } .avatar.b { background: #f0dfae; }
+.pamphlet .artist { font-size: 28px; font-weight: 700; line-height: 1.2; }
+.tag.center { align-self: center; } .stretch { align-self: stretch; } .stretch ol { margin: 0; padding-left: 20px; }
+.meter { width: 100%; } .meter .top { display: flex; justify-content: space-between; font-size: 13px; } .meter b { color: var(--accent); }
+.bar { height: 12px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); overflow: hidden; } .bar i { display: block; height: 100%; background: var(--rank1); }
+.reason { background: var(--rank3); border-radius: 6px; padding: 7px 10px; font-size: 13px; align-self: stretch; text-align: center; }
+.linkbox { font: inherit; font-size: 12px; padding: 8px; border: 1px solid var(--line); border-radius: 6px; width: 100%; }
+.toast { background: var(--fg); color: #fff; border-radius: 6px; padding: 8px 12px; text-align: center; font-size: 14px; }
+
+.banner { background: var(--rank3); border-radius: 8px; padding: 12px 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.banner b { margin-right: auto; color: var(--accent); }
+.ro { font-size: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); border-radius: 4px; padding: 1px 7px; }
+.artist-card { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.artist-card .info { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 6px; }
+.artist-name { font-size: 24px; font-weight: 700; }
+.cmp-head { display: flex; justify-content: space-between; align-items: center; text-align: center; }
+.cmp-head .p { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 13px; }
+.cmp-head .score { font-size: 44px; font-weight: 700; color: var(--accent); line-height: 1.1; }
+.cmp-rows { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 6px 10px; align-items: center; margin-top: 14px; font-size: 13px; }
+.bars { display: flex; flex-direction: column; gap: 2px; } .bars i { display: block; height: 8px; border-radius: 2px; min-width: 2px; }
+.bars .o, .sw.o { background: var(--rank1); } .bars .v, .sw.v { background: #f0dfae; }
+.legend { display: flex; gap: 14px; margin-top: 10px; font-size: 13px; } .legend span { display: flex; align-items: center; gap: 6px; }
+.sw { width: 11px; height: 11px; border-radius: 2px; }
+.empty { align-items: center; } .empty .q { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--muted); color: var(--muted); display: grid; place-items: center; font-size: 26px; font-weight: 700; }
+
+/* 곡 관리 */
+.count-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.count-table th, .count-table td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; }
+.count-table th { color: var(--muted); font-weight: 600; }
+.upload-form { display: flex; flex-direction: column; gap: 10px; }
+.upload-form ul { margin: 0; padding-left: 18px; }
+
+/* 가수 사진 */
+img.avatar.photo { object-fit: cover; display: block; border: 2px solid var(--panel); }
+
+/* 플레이리스트 설명과 곡 목록 */
+.pl .desc { font-size: 13px; color: var(--fg); }
+.pl .why { font-size: 12px; color: var(--accent); }
+.pl-songs { margin-top: 4px; }
+.pl-songs summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--accent); padding: 4px 0; }
+.song-row { display: flex; align-items: center; gap: 6px; padding: 5px 0; border-top: 1px solid rgba(0, 0, 0, .08); margin: 0; font-size: 13px; }
+.song-row .no { width: 18px; color: var(--muted); flex: none; }
+.song-row .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.song-row .new { flex: none; font-size: 11px; background: var(--panel); color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 0 5px; }
+.play.sm { width: 26px; height: 26px; font-size: 11px; }
+
+/* 곡 관리: 가수 사진 목록 */
+.artist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+.artist-grid figure { margin: 0; text-align: center; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.avatar.sm { width: 48px; height: 48px; font-size: 18px; }
+
+/* 스포티파이 연결 상자 */
+.spotify-box { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--panel); border: 1.5px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.spotify-box form { margin: 0; }
+.sp-logo { color: #1db954; font-size: 22px; line-height: 1; }
+.sp-text { display: flex; flex-direction: column; margin-right: auto; min-width: 200px; }
+.btn.sp { background: #1db954; border-color: #1db954; color: #fff; }
+
+/* 청취 기록 추가 (add.php) */
+.add-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.add-tabs a { padding: 6px 12px; border-radius: 999px; background: var(--rank3); color: var(--accent); font-weight: 600; text-decoration: none; font-size: 14px; }
+.sec-title small { font-size: 13px; font-weight: 400; margin-left: 6px; }
+.pick-tools { display: flex; flex-direction: column; gap: 8px; margin: 12px 0 8px; }
+.pick-tools input[type=search] { padding: 9px 12px; border: 1.5px solid var(--line); border-radius: 6px; font: inherit; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { border: 1.5px solid var(--line); background: var(--panel); border-radius: 999px; padding: 3px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+.chip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pick-list { max-height: 380px; overflow-y: auto; border: 1.5px solid var(--line); border-radius: 6px; }
+.pick-item { display: grid; grid-template-columns: 22px 1fr auto; grid-template-areas: "c t g" "c a g"; column-gap: 10px;
+             padding: 8px 12px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.pick-item[hidden] { display: none; }
+.pick-item:hover { background: var(--bg); }
+.pick-item input { grid-area: c; align-self: center; width: 17px; height: 17px; }
+.pick-item .t { grid-area: t; font-weight: 600; }
+.pick-item .a { grid-area: a; color: var(--muted); font-size: 13px; }
+.pick-item .g { grid-area: g; align-self: center; font-size: 12px; color: var(--accent); background: var(--rank3); border-radius: 4px; padding: 1px 8px; }
+.pick-item:has(input:checked) { background: var(--rank3); }
+.custom { margin-top: 12px; }
+.custom summary, .guides summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+.custom-row { display: grid; grid-template-columns: 1fr 1fr 110px; gap: 6px; margin: 6px 0; }
+.custom-row input, .custom-row select { padding: 7px 9px; border: 1.5px solid var(--line); border-radius: 6px; font: inherit; min-width: 0; }
+.pick-bar { position: sticky; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            background: var(--panel); border-top: 1.5px solid var(--line); margin-top: 12px; padding-top: 12px; }
+#pick-count { font-weight: 700; color: var(--accent); }
+.file-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 10px 0 6px; }
+.guides { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 6px; }
+.guides details { border-bottom: 1px solid var(--line); padding: 4px 0 8px; }
+.guides ol { margin: 4px 0 6px; padding-left: 22px; font-size: 14px; }
+.guides li { margin: 3px 0; }
+.empty-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+@media (max-width: 560px) { .custom-row { grid-template-columns: 1fr 1fr; } .custom-row select { grid-column: span 2; } }
+
+/* 곡 관리: 곡 정보 고치기 · 중복 곡 합치기 */
+.edit-search { gap: 8px; align-items: center; flex-wrap: wrap; }
+.edit-search input[type=search] { flex: 1; min-width: 160px; padding: 7px 10px; border: 1.5px solid var(--line); border-radius: 6px; font: inherit; }
+.edit-scroll { max-height: 460px; overflow-y: auto; }
+.edit-table input, .edit-table select { width: 100%; padding: 5px 7px; border: 1.5px solid var(--line); border-radius: 5px; font: inherit; font-size: 14px; }
+.edit-table tr.etc td { background: #fff7e6; }
+.dupe { border: 1.5px solid var(--line); border-radius: 6px; margin: 8px 0; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+.dupe label { cursor: pointer; }
+
+/* 업로드 결과 카드 */
+.upload-result { border-color: #9fd3b0; display: flex; flex-direction: column; gap: 10px; }
+.ur-head { display: flex; align-items: center; gap: 10px; }
+.ur-head > div { flex: 1; }
+.ur-ok { width: 28px; height: 28px; border-radius: 50%; background: #e3f4e8; color: #1f7a3d; display: grid; place-items: center; font-weight: 700; }
+.ur-close { border: 0; background: none; font-size: 22px; color: var(--muted); cursor: pointer; line-height: 1; }
+.ur-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.ur-tiles div { background: var(--bg); border-radius: 6px; padding: 8px; text-align: center; }
+.ur-tiles b { display: block; font-size: 20px; }
+.ur-tiles span { font-size: 12px; color: var(--muted); }
+.ur-sub { font-size: 13px; color: var(--muted); font-weight: 600; }
+.ur-top { margin: 0; padding-left: 22px; font-size: 14px; }
+.ur-n { color: var(--accent); font-size: 12px; margin-left: 4px; }
+.ur-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.ur-chips span { font-size: 12px; background: var(--rank3); color: var(--accent); border-radius: 999px; padding: 2px 9px; }
+.ur-chips .more { background: var(--bg); color: var(--muted); }
+.ur-skip summary { cursor: pointer; font-size: 13px; color: var(--muted); }
+.ur-skip ul { margin: 6px 0 0; padding-left: 20px; }
+@media (max-width: 560px) { .ur-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* 대기 화면 */
+.wait { position: fixed; inset: 0; background: rgba(20, 16, 40, .45); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+.wait[hidden] { display: none; }
+.wait-box { background: var(--panel); border-radius: 10px; padding: 20px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 8px; }
+.wait-title { display: flex; align-items: center; gap: 8px; font-size: 16px; }
+.spin { width: 18px; height: 18px; border: 3px solid var(--rank2); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+.wait.failed .spin { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.wait-bar { height: 8px; background: var(--bg); border-radius: 999px; overflow: hidden; }
+.wait-bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+.wait-bar i.flow { background: repeating-linear-gradient(45deg, var(--accent) 0 10px, #6c5cc4 10px 20px); background-size: 28px 28px; animation: flow .8s linear infinite; }
+@keyframes flow { to { background-position: 28px 0; } }
+.wait-pct { text-align: right; }
+.wait-list { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+.wait-list li { padding: 2px 0 2px 24px; position: relative; color: var(--muted); }
+.wait-list li::before { content: '○'; position: absolute; left: 4px; }
+.wait-list li.now { color: var(--fg); font-weight: 600; }
+.wait-list li.now::before { content: '◐'; color: var(--accent); }
+.wait-list li.done { color: var(--fg); }
+.wait-list li.done::before { content: '✓'; color: #1f7a3d; font-weight: 700; }
+.wait-err { color: var(--bad); }
+.edit-table td:nth-child(4) { min-width: 190px; }
+.edit-search select { padding: 7px 9px; border: 1.5px solid var(--line); border-radius: 6px; font: inherit; }
+.edit-scroll { overflow-x: auto; }
